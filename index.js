@@ -1,8 +1,8 @@
-import { dates } from './utils/dates.js'
+import { dates } from './utils/dates.js';
+import secret from './secret.js';
 
-const tickersArr = []
-
-const generateReportBtn = document.querySelector('.generate-report-btn')
+const tickersArr = [];
+const generateReportBtn = document.getElementById('generate-report-btn')
 
 generateReportBtn.addEventListener('click', fetchStockData)
 
@@ -41,9 +41,9 @@ async function fetchStockData() {
     loadingArea.style.display = 'flex'
     try {
         const stockData = await Promise.all(tickersArr.map(async (ticker) => {
-            const url = `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${dates.startDate}/${dates.endDate}?apiKey=${process.env.POLYGON_API_KEY}`
+            const url = `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${dates.startDate}/${dates.endDate}?apiKey=${secret.POLYGON_API_KEY}`
             const response = await fetch(url)
-            const data = await response.text()
+            const data = await response.json()
             const status = await response.status
             if (status === 200) {
                 apiMessage.innerText = 'Creating report...'
@@ -52,16 +52,53 @@ async function fetchStockData() {
                 loadingArea.innerText = 'There was an error fetching stock data.'
             }
         }))
+        console.log(stockData)
         fetchReport(stockData.join(''))
-    } catch(err) {
+    } catch (err) {
         loadingArea.innerText = 'There was an error fetching stock data.'
         console.error('error: ', err)
     }
 }
 
+
 async function fetchReport(data) {
-    
+    const SYSTEM_PROMPT = `You are a trading guru. Given data on share prices,
+    write a report of no more than 150 words describing the stock's performance and recommending whether to buy, hold or sell.`;
+
+    try {
+        const response = await fetch(`https://api-inference.huggingface.co/v1/chat/completions`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${secret.HF_ACCESS_TOKEN}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
+                messages: [
+                    { role: "system", content: SYSTEM_PROMPT },
+                    { role: "user", content: `Here is the data:\n${data}` }
+                ],
+                max_tokens: 512,
+                temperature: 0.7,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error calling Hugging Face API: ${response.statusText}`);
+        }
+
+        const result = await response.json();
+        const output = result.choices?.[0]?.message?.content || 'No response generated.';
+        renderReport(output);
+
+    } catch (err) {
+        console.error('Error in fetchReport:', err);
+        loadingArea.innerText = 'There was an error generating the report.';
+    }
 }
+
+
+
 
 function renderReport(output) {
     loadingArea.style.display = 'none'
