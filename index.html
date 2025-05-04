@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+	<head>
+		<title>Dodgy Dave's Stock Predictions</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="module" crossorigin src="/stock-prediction/assets/index-DMA7jrSj.js"></script>
+		<link rel="stylesheet" crossorigin href="/stock-prediction/assets/index-CoBpkd5L.css">
+	</head>
+
+	<body>
+		<header>
+			<img src="/stock-prediction/assets/logo-dave-text-rt4OKlC5.png" alt="Dodgy Dave's Stock Predictions">
+		</header>
+		<main>
+			<section class="action-panel">
+				<form id="ticker-input-form">
+					<label for="ticker-input"> Add up to 3 stock tickers below to get a super accurate stock predictions report👇 </label>
+					<div class="form-input-control">
+						<input type="text" id="ticker-input" placeholder="MSFT">
+						<button class="add-ticker-btn" type="submit">
+							<img src="data:image/svg+xml,%3c?xml%20version='1.0'%20encoding='iso-8859-1'?%3e%3c!--%20Uploaded%20to:%20SVG%20Repo,%20www.svgrepo.com,%20Generator:%20SVG%20Repo%20Mixer%20Tools%20--%3e%3c!DOCTYPE%20svg%20PUBLIC%20'-//W3C//DTD%20SVG%201.1//EN'%20'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3e%3csvg%20fill='%23000000'%20version='1.1'%20id='Capa_1'%20xmlns='http://www.w3.org/2000/svg'%20xmlns:xlink='http://www.w3.org/1999/xlink'%20width='800px'%20height='800px'%20viewBox='0%200%20349.03%20349.031'%20xml:space='preserve'%3e%3cg%3e%3cpath%20d='M349.03,141.226v66.579c0,5.012-4.061,9.079-9.079,9.079H216.884v123.067c0,5.019-4.067,9.079-9.079,9.079h-66.579%20c-5.009,0-9.079-4.061-9.079-9.079V216.884H9.079c-5.016,0-9.079-4.067-9.079-9.079v-66.579c0-5.013,4.063-9.079,9.079-9.079%20h123.068V9.079c0-5.018,4.069-9.079,9.079-9.079h66.579c5.012,0,9.079,4.061,9.079,9.079v123.068h123.067%20C344.97,132.147,349.03,136.213,349.03,141.226z'/%3e%3c/g%3e%3c/svg%3e" class="add-ticker-svg" alt="add"> 
+						</button>
+					</div>
+				</form>
+				<p class="ticker-choice-display">
+					Your tickers will appear here...
+				</p>
+				<button id="generate-report-btn" class="generate-report-btn" type="button" disabled>
+					Generate Report
+				</button>
+				<p class="tag-line">Always correct 15% of the time!</p>
+			</section>
+			<section class="loading-panel">
+				<img src="data:image/svg+xml,%3csvg%20width='200px'%20height='200px'%20viewBox='0%200%20100%20100'%20xmlns='http://www.w3.org/2000/svg'%20preserveAspectRatio='xMidYMid'%3e%3ccircle%20cx='50'%20cy='50'%20fill='none'%20stroke='%2346ff90'%20stroke-width='10'%20r='35'%20stroke-dasharray='164.93361431346415%2056.97787143782138'%3e%3canimateTransform%20attributeName='transform'%20type='rotate'%20repeatCount='indefinite'%20dur='1s'%20keyTimes='0;1'%20values='0%2050%2050;360%2050%2050'%3e%3c/animateTransform%3e%3c/circle%3e%3c/svg%3e" alt="loading">
+				<div id="api-message">Querying Stocks API...</div>
+			</section>
+			<section class="output-panel">
+				<h2>Your Report 😜</h2>
+			</section>
+		</main>
+		<footer>
+			&copy; This is not real financial advice!
+		</footer>
+        
+	</body>
+
+</html>
